@@ -28,7 +28,7 @@ func (r *result) ResponseSuccess(message string, data ...interface{}) *result {
 	return &result{
 		Lasting: time.Now().Format(time.DateTime),
 		Status:  true,
-		Code:    1000,
+		Code:    2000,
 		Msg:     message,
 		Data:    d,
 	}
