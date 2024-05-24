@@ -7,6 +7,7 @@ import (
 var Response *result
 
 type result struct {
+	TraceId string      `json:"trace_id"`
 	Lasting string      `json:"lasting"`
 	Status  bool        `json:"status"`
 	Code    int         `json:"code"`
@@ -14,7 +15,7 @@ type result struct {
 	Data    interface{} `json:"data"`
 }
 
-func (r *result) ResponseSuccess(message string, data ...interface{}) *result {
+func (r *result) ResponseSuccess(traceId, message string, data ...interface{}) *result {
 	var d interface{}
 	if data != nil {
 		d = data[0]
@@ -26,6 +27,7 @@ func (r *result) ResponseSuccess(message string, data ...interface{}) *result {
 		message = "success"
 	}
 	return &result{
+		TraceId: traceId,
 		Lasting: time.Now().Format(time.DateTime),
 		Status:  true,
 		Code:    2000,
@@ -34,7 +36,7 @@ func (r *result) ResponseSuccess(message string, data ...interface{}) *result {
 	}
 }
 
-func (r *result) ResponseError(code int, message string, data ...interface{}) *result {
+func (r *result) ResponseError(code int, traceId, message string, data ...interface{}) *result {
 	var d interface{}
 	if data != nil {
 		d = data[0]
@@ -43,6 +45,7 @@ func (r *result) ResponseError(code int, message string, data ...interface{}) *r
 	}
 
 	return &result{
+		TraceId: traceId,
 		Lasting: time.Now().Format(time.DateTime),
 		Status:  false,
 		Code:    code,
